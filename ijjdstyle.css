@@ -1,0 +1,27 @@
+body {
+	margin: 0;
+	font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+	 "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	background-color: #869397;
+}
+
+.thenews {
+	font-size: 220px;
+	text-align: center;
+	background-image: url('Images/Dallas_Cowboys.png'); /* Path to your image */
+    background-size: 62%; /* Adjust as needed: cover, contain, 100%, etc. */
+    background-position: center center; /* Adjust as needed */
+    background-repeat: no-repeat; /* Prevents image repetition */
+	 padding: 1px; /* Add padding to prevent text from touching edges */
+    color: rgb(255, 255, 255); /* Ensure text is visible against the background */
+	-webkit-text-stroke-width: 15px;
+	-webkit-text-stroke-color: black;
+}
+
+.jjbday {
+	font-size: 75px;
+	text-align: center;
+	font-weight: bold;
+	font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+	 "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}

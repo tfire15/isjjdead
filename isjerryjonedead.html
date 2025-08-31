@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Is Jerry Jones Dead?</title>
+  <link rel="stylesheet" href="ijjdstyle.css">
+  <link rel="icon" href="Images/Dallas_Cowboys.png">
+</head>
+<body>
+  <div class="thenews">
+    <h1 id="result">Checking...</h1>
+  </div>
+
+  <div class="jjbday">
+    <div id="bdayresult"></div>
+  </div>
+
+  <script>
+    // Helper to calculate age
+    function getTimeSince(dateString) {
+      const startDate = new Date(dateString);
+      const now = new Date();
+
+      if (isNaN(startDate.getTime())) {
+        return null;
+      }
+
+      let years = now.getFullYear() - startDate.getFullYear();
+      let months = now.getMonth() - startDate.getMonth();
+
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
+
+      return { years, months };
+    }
+
+    // Main function to check if Jerry is deceased, then update both fields
+    async function checkAndShowStatus() {
+      const name = "Jerry Jones";
+      const birthdate = '1942-10-13'; // actual birthdate from Wikipedia
+      const resultDiv = document.getElementById('result');
+      const bdayDiv = document.getElementById('bdayresult');
+
+      const url = `https://www.wikidata.org/w/api.php?action=wbgetentities&sites=enwiki&titles=${encodeURIComponent(name)}&props=claims&format=json&origin=*`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const entity = Object.values(data.entities)[0];
+        const deathClaim = entity?.claims?.P570;
+
+        if (deathClaim) {
+          resultDiv.textContent = "YES";
+          bdayDiv.textContent = "🕊️ RIP Jerry";
+        } else {
+          resultDiv.textContent = "NO";
+
+          const timeSince = getTimeSince(birthdate);
+          const today = new Date();
+          const bdayThisYear = new Date(today.getFullYear(), 9, 13); // Oct is 9 (0-based)
+
+          if (
+            today.getDate() === bdayThisYear.getDate() &&
+            today.getMonth() === bdayThisYear.getMonth()
+          ) {
+            bdayDiv.textContent = "🎉 Happy Birthday Jerry.";
+          } else {
+            bdayDiv.textContent = `Jerry is currently ${timeSince.years} years and ${timeSince.months} month(s) old.`;
+          }
+        }
+      } catch (error) {
+        console.error("Error checking death status:", error);
+        resultDiv.textContent = "Error retrieving data.";
+        bdayDiv.textContent = "";
+      }
+    }
+
+    // Call the function on load
+    checkAndShowStatus();
+  </script>
+</body>
+</html>
